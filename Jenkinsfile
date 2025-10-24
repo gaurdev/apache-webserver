@@ -8,7 +8,7 @@ pipeline {
     stages {
         stage('Clone Repository') {
             steps {
-                git 'https://github.com/gaurdev/apache-webserver.git'
+                git branch: 'main', url: 'https://github.com/gaurdev/apache-webserver.git', credentialsID: 'github-credentials'
             }
         }
         stage('Build Docker Image') {
