@@ -23,7 +23,7 @@ pipeline {
                 script {
                     sh "docker run -d --name apache-test -p 8888:80 ${registry}:${BUILD_NUMBER}"
                     sh "sleep 5"
-                    sh "curl -f http://localhost:8080"
+                    sh "curl -f http://localhost:8888"
                     sh "docker rm -f apache-test"
                 }
             }
