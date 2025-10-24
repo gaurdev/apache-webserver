@@ -14,7 +14,7 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script {
-                    dockerImage = podman.build("${registry}:${BUILD_NUMBER}")
+                    dockerImage = docker.build("${registry}:${BUILD_NUMBER}")
                 }
             }
         }
