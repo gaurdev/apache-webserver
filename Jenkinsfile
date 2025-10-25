@@ -7,6 +7,7 @@ pipeline {
 	REMOTE_USER = 'root'
         REMOTE_HOST = '192.168.17.138'
         REMOTE = "${REMOTE_USER}@${REMOTE_HOST}"
+	TAG="${BUILD_NUMBER}"
     }
     stages {
         stage('Clone Repository') {
@@ -52,7 +53,7 @@ pipeline {
                 ssh -o StrictHostKeyChecking=no ${REMOTE} <<'EOF'
                 #docker pull "${registry}:${BUILD_NUMBER}"
                 docker rm -f apache-live || true
-                docker run -d --restart=always --name apache-live -p 2080:80 "${registry}:${BUILD_NUMBER}"
+                docker run -d --restart=always --name apache-live -p 2080:80 "${registry}:${TAG}"
 EOF
                 '''
             }
