@@ -53,7 +53,7 @@ pipeline {
                 docker pull ${registry}:${BUILD_NUMBER}
                 docker rm -f apache-live || true
                 docker run -d --restart=always --name apache-live -p 2080:80 ${registry}:${BUILD_NUMBER}
-                 EOF
+                	EOF
                 '''
             }
         }
