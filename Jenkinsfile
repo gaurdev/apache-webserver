@@ -4,6 +4,9 @@ pipeline {
         registry = "garvmanster/myapache"
         registryCredential = 'docker-credentials'
         dockerImage = ''
+	REMOTE_USER = 'root'
+        REMOTE_HOST = '192.168.17.138'
+        REMOTE = "${REMOTE_USER}@${REMOTE_HOST}"
     }
     stages {
         stage('Clone Repository') {
@@ -42,6 +45,18 @@ pipeline {
                 sh "docker rmi ${registry}:${BUILD_NUMBER}"
             }
         }
-    }
+	stage('Deploy') {
+            steps {
+		sshagent(['ssh-key']) {
+                sh '''
+                ssh -o StrictHostKeyChecking=no ${REMOTE} <<EOF
+                docker pull ${registry}:${BUILD_NUMBER}
+                docker rm -f apache-live || true
+                docker run -d --restart=always --name apache-live -p 2080:80 ${registry}:${BUILD_NUMBER}
+                EOF
+                '''
+            }
+        }
 }
-
+}
+}
