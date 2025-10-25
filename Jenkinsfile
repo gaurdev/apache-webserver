@@ -54,6 +54,8 @@ pipeline {
 		echo "Build Number is ${BUILD_NUMBER}"
                 ssh -o StrictHostKeyChecking=no ${REMOTE} <<'EOF'
                 #docker pull "${registry}:${BUILD_NUMBER}"
+		echo "registry is ${registry}"
+		echo "Build Number is ${BUILD_NUMBER}"
                 docker rm -f apache-live || true
                 docker run -d --restart=always --name apache-live -p 2080:80 "${registry}:36"
 EOF
