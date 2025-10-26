@@ -57,7 +57,7 @@ pipeline {
 		echo "registry is ${registry}"
 		echo "Build Number is ${BUILD_NUMBER}"
                 docker rm -f apache-live || true
-                docker run -d --restart=always --name apache-live -p 2080:80 "${registry}:36"
+                docker run -d --restart=always --name apache-live -p 2080:80 "${registry}:${BUILD_NUMBER}"
 EOF
                 '''
             }
